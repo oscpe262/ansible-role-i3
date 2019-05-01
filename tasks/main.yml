@@ -64,12 +64,12 @@
   tags: i3
   ignore_errors: yes
 
- - name: .Xresources
-   template:
-     src: '.Xresources.j2'
-     dest: '{{ item.value }}{{ item.key }}/.Xresources'
-   with_dict: '{{ userlist }}'
-   ignore_errors: True
-   tags: xresources,i3,xorg
+- name: ".Xresources"
+  template:
+    src: '.Xresources.j2'
+    dest: '{{ item.value }}{{ item.key }}/.Xresources'
+  with_dict: '{{ userlist }}'
+  ignore_errors: True
+  tags: xresources,i3,xorg
 
 ...
