@@ -1,0 +1,66 @@
+## roles/ansible-role-i3/tasks/main.yml
+# vim:ft=yaml.ansible:
+---
+- name: "Include vars"
+  include_vars: main.yml
+  tags: i3,xorg
+
+- name: "Install Xorg"
+  dnf:
+    name: '{{ xorg }}'
+    state: present
+  ignore_errors: yes
+  tags: i3,xorg
+
+- name: OP Keybinding
+  template:
+    src: op.j2
+    dest: /usr/share/X11/xkb/symbols/op
+  tags: keybinding,i3,xorg
+
+- name: Set Keymap
+  command: localectl set-x11-keymap se
+  tags: keybinding,i3,xorg
+  
+- name: "Install i3 Repo"
+  yum_repository:
+    name: 'yaroslav-i3desktop'
+    description: 'Copr repo for i3desktop owned by yaroslav'
+    baseurl: 'https://copr-be.cloud.fedoraproject.org/results/yaroslav/i3desktop/fedora-$releasever-$basearch'
+    gpgcheck: yes
+    gpgkey: 'https://copr-be.cloud.fedoraproject.org/results/yaroslav/i3desktop/pubkey.gpg'
+    state: present
+  tags: i3
+  
+##  As running with --check flag won't include newly installed repos,
+#   this will fail until the repo is actually installed.
+- name: "Install i3"
+  dnf:
+    name: '{{ i3 }}'
+    state: present
+    enablerepo: yarolav-i3desktop
+  ignore_errors: yes
+  tags: i3
+
+- name: "Ensure i3 config dir exists"
+  file:
+    path: /home/{{ i3user }}/.config/i3
+    state: directory
+    mode: 0750
+    owner: '{{ i3user }}'
+    group: '{{ i3group }}'
+  tags: i3
+
+- name: "Modify i3 configs"
+  template:
+    src: '{{ item.name }}'
+    dest: '{{ item.dest }}'
+    owner: '{{ i3user }}'
+    group: '{{ i3group }}'
+    mode: 0750
+  with_items:
+    - { name: 'i3config.j2', dest: '/home/{{ i3user }}/.config/i3/config' }
+    - { name: 'i3status.conf.j2', dest: '/home/{{ i3user }}/.config/i3status.conf' }
+  tags: i3
+  ignore_errors: yes
+...

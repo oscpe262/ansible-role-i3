@@ -1,0 +1,16 @@
+## roles/ansible-role-i3/vars/main.yml
+# vim:ft=yaml.ansible:
+---
+xorg:
+  - xorg-x11-drv-libinput
+  - mesa-libGL-devel
+
+i3:
+  - dmenu
+  - i3
+  - arandr
+  - compton
+  - rofi
+  - lxappearance
+  - nitrogen
+...
