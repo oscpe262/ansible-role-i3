@@ -71,6 +71,7 @@
   with_items:
     - { name: 'i3config.j2', dest: '/home/{{ i3user }}/.config/i3/config' }
     - { name: 'i3status.conf.j2', dest: '/home/{{ i3user }}/.config/i3status.conf' }
+    - { name: 'i3temp.sh.j2' }, dest: '/home/{{ i3user }}/.config/i3temp.sh' }
   tags: i3
   ignore_errors: yes
 
