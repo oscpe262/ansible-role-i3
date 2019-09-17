@@ -1,0 +1,18 @@
+## roles/ansible-role-i3/vars/main.yml
+# vim:ft=yaml.ansible:
+---
+xorg:
+  - xorg-x11-drv-libinput
+  - mesa-libGL-devel
+
+# RHEL8 issue: nothing provides perl(:MODULE_COMPAT_5.16.3), let's install Cinnamon instead, for shits and giggles
+i3:
+  - dmenu
+  - '^@Cinnamon desktop'
+  #- i3
+  #- arandr
+  #- compton
+  #- rofi
+  #- lxappearance
+  #- nitrogen
+...

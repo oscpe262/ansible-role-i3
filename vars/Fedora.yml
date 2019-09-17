@@ -1,0 +1,17 @@
+## roles/ansible-role-i3/vars/Fedora.yml
+# vim:ft=yaml.ansible:
+---
+xorg:
+  - xorg-x11-drv-libinput
+  - mesa-libGL-devel
+
+i3:
+  - dmenu
+  - i3
+  - i3lock
+  - arandr
+  - compton
+  - rofi
+  - lxappearance
+  - nitrogen
+...

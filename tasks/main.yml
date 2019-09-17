@@ -31,7 +31,7 @@
     gpgkey: 'https://copr-be.cloud.fedoraproject.org/results/yaroslav/i3desktop/pubkey.gpg'
     state: present
   tags: i3
-  when: ansible_distribution_version|int < 30  
+  when: ansible_distribution == "Fedora" and ansible_distribution_version|int < 30  
 
 ##  As running with --check flag won't include newly installed repos,
 #   this will fail until the repo is actually installed.
@@ -42,15 +42,15 @@
     enablerepo: yarolav-i3desktop
   ignore_errors: yes
   tags: i3
-  when: ansible_distribution_version|int < 30
+  when: ansible_distribution == "Fedora" and ansible_distribution_version|int < 30  
 
-- name: "Install i3 (Fedora 30<)"
+
+- name: "Install i3"
   dnf:
     name: '{{ i3 }}'
     state: present
   ignore_errors: yes
   tags: i3
-  when: ansible_distribution_version|int >= 30  
 
 - name: "Ensure i3 config dir exists"
   file:
